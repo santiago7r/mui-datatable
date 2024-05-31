@@ -4,7 +4,7 @@ import './App.css';
 import usePosts from './hooks/usePosts';
 
 function App() {
-const { data } = usePosts();
+  const { data } = usePosts();
 
   const columns = [
     {
@@ -14,8 +14,21 @@ const { data } = usePosts();
       }
     }, "ID", "Title", "Body"];
 
+  const handleRowClick = (rowData) => {
+    console.log(rowData);
+  }
+
+  const handleDelete = (_, dataTableWithOutDeletedPosts) => {
+    localStorage.setItem('postsFromAPI', JSON.stringify(dataTableWithOutDeletedPosts));
+    console.log(JSON.parse(localStorage.getItem('postsFromAPI')));
+  }
+  
+
+
   const options = {
     filterType: 'checkbox',
+    onRowClick: handleRowClick,
+    onRowsDelete: handleDelete
   };
   
   return <MUIDataTable

@@ -9,15 +9,15 @@ const usePosts = () => {
         const res = await fetch('https://jsonplaceholder.typicode.com/posts');
     
         const posts = await res.json();
-        console.log({posts})
     
         // Convert array of objects into array of arrays
-        setData(posts.map(Object.values));
+        const adaptedPosts = posts.map(Object.values);
+
+        setData(JSON.parse(localStorage.getItem('postsFromAPI')) ? JSON.parse(localStorage.getItem('postsFromAPI')) : adaptedPosts);
       }
     
       fetchPost();
     }, [])
-
     return {data};
 }
 
