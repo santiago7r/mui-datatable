@@ -6,7 +6,13 @@ import usePosts from './hooks/usePosts';
 function App() {
 const { data } = usePosts();
 
-  const columns = ["User ID", "ID", "Title", "Body"];
+  const columns = [
+    {
+      name: "User ID",
+      options: {
+        display: false
+      }
+    }, "ID", "Title", "Body"];
 
   const options = {
     filterType: 'checkbox',
