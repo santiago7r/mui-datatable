@@ -15,16 +15,22 @@ const style = {
     p: 4,
   };
 
-const Modals = ({ handleClose, open, action, currenEditingRow = [], labelOfButton = 'ADD POST' }) => {
+const Modals = ({
+    handleClose,
+    open,
+    action,
+    currenEditingRow = [],
+    labelOfButton = 'ADD POST',
+    allDisabled = false,
+    showLabel = true
+  }) => {
   const [userIdFromEditing = null, idFromEditing = null, titleFromEditing = '', bodyFromEditing = ''] = currenEditingRow;
-  const initialState = {
+  const [newPost, setNewPost] = useState({
     userId: userIdFromEditing,
     id: idFromEditing,
     title: titleFromEditing,
     body: bodyFromEditing
-  }
-  console.log('initialState', initialState);
-  const [newPost, setNewPost] = useState(initialState);
+  });
 
     return (
         <div>
@@ -36,30 +42,48 @@ const Modals = ({ handleClose, open, action, currenEditingRow = [], labelOfButto
         >
           <Box sx={style}>
             <TextField
+              disabled={allDisabled}
+              fullWidth
               id="outlined-basic"
-              value={newPost.userId}
-              label="User ID" variant="outlined"
+              label="User ID"
+              margin="normal"
               onChange={(event) => setNewPost({...newPost, userId: event.target.value})}
+              value={newPost.userId}
+              variant="outlined"
             />
             <TextField
+              disabled={allDisabled}
+              fullWidth
               id="outlined-basic"
-              value={newPost.id}
-              label="ID" variant="outlined"
+              label="ID"
+              margin="normal"
               onChange={(event) => setNewPost({...newPost, id: event.target.value})}
+              value={newPost.id}
+              variant="outlined"
             />
             <TextField
+              disabled={allDisabled}
+              fullWidth
               id="outlined-basic"
-              value={newPost.title}
-              label="Title" variant="outlined"
+              label="Title"
+              margin="normal"
               onChange={(event) => setNewPost({...newPost, title: event.target.value})}
+              value={newPost.title}
+              variant="outlined"
             />
             <TextField
+              disabled={allDisabled}
               id="outlined-basic"
-              value={newPost.body}
-              label="Body" variant="outlined"
+              fullWidth
+              label="Body"
+              margin="normal"
+              multiline
               onChange={(event) => setNewPost({...newPost, body: event.target.value})}
+              rows={4}
+              value={newPost.body}
+              variant="outlined"
             />
-            <Button onClick={() => action(newPost)}>{labelOfButton}</Button>
+            { showLabel && <Button onClick={() => action(newPost)}>{labelOfButton}</Button> }
           </Box>
         </Modal>
       </div>
@@ -69,9 +93,11 @@ const Modals = ({ handleClose, open, action, currenEditingRow = [], labelOfButto
 Modals.propTypes = {
     handleClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    action: PropTypes.func.isRequired,
+    action: PropTypes.func,
     currenEditingRow: PropTypes.object,
-    labelOfButton: PropTypes.string
+    labelOfButton: PropTypes.string,
+    allDisabled: PropTypes.bool.isRequired,
+    showLabel: PropTypes.bool.isRequired
 }
 
 export default Modals;

@@ -18,15 +18,14 @@ function App() {
   const [dataTable, setDataTable] = useState([]);
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
   const [currenEditingRow, setCurrenEditingRow] = useState();
+  const [selectedRowDetails, setSelectedRowDetails] = useState();
+  
 
   useEffect(() => {
     setDataTable(data);
   }, [data])
-
-  const handleCustomBodyRender = (rowData) => {
-    console.log({rowData});
-  }
 
   const handleDelete = (_, dataTableWithOutDeletedPosts) => {
     setDataTable(dataTableWithOutDeletedPosts);
@@ -40,6 +39,10 @@ function App() {
   const handleOpenEdit = () => setOpenEdit(true);
 
   const handleCloseEdit = () => setOpenEdit(false);
+
+  const handleOpenDetails = () => setOpenDetails(true);
+
+  const handleCloseDetails = () => setOpenDetails(false);
 
   const addNewPost = ({userId, id, title, body}) => {
     const newPost = [
@@ -81,7 +84,8 @@ function App() {
       filter: true,
       customBodyRender: (_, {rowData}) => {
       return (
-        <button onClick={() => {
+        <button onClick={(event) => {
+          event.stopPropagation();
           setCurrenEditingRow(rowData);
           handleOpenEdit();
         }
@@ -91,17 +95,22 @@ function App() {
       }
     }
     }];
+
+    const hanldeRowClick = (rowInfo, _, event) => {
+      event.stopPropagation();
+      setSelectedRowDetails(rowInfo);
+      handleOpenDetails();
+    }
   
   const options = {
     filterType: 'checkbox',
-    customBodyRender: handleCustomBodyRender,
     onRowsDelete: handleDelete,
     filter: false,
     print: false,
     download: false,
     viewColumns: false,
+    onRowClick: hanldeRowClick
   };
-  
   return (
     <>
       {open && <Modals
@@ -109,13 +118,22 @@ function App() {
         open={open}
         action={addNewPost}
       />}
-     {currenEditingRow && <Modals
+     {openEdit && currenEditingRow && <Modals
         key={currenEditingRow[1]}
         handleClose={handleCloseEdit}
         open={openEdit}
         currenEditingRow={currenEditingRow}
         action={handleEditPost}
         labelOfButton='EDIT'
+      />
+      }      
+      {openDetails && selectedRowDetails && <Modals
+        key={selectedRowDetails[1]}
+        handleClose={handleCloseDetails}
+        open={openDetails}
+        currenEditingRow={selectedRowDetails}
+        allDisabled={true}
+        showLabel={false}
       />
       } 
       <Button onClick={handleOpen}>

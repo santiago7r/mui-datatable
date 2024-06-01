@@ -12,7 +12,6 @@ export async function getAll(url='https://jsonplaceholder.typicode.com/posts') {
             const raw = await response.json();
             const result = raw.map(Object.values);
             setDbItem(result);
-            console.log('Success:', result);
             return { result, status: 'success' };
         }
     } catch (error) {
@@ -26,10 +25,8 @@ export async function getById(url='https://jsonplaceholder.typicode.com/posts', 
         const response = await fetch(`${url}${id}`)
         const result = await response.json();
 
-        console.log('Success:', result);
         return { result, status: 'success' };
     } catch (error) {
-        console.error('Error:', error);
         return { status: 'error' };
     }
 }
@@ -49,10 +46,8 @@ export async function post(url = 'https://jsonplaceholder.typicode.com/posts', d
         const newCurrentPostsInLocalStorage = [data, ...currentPostsInLocalStorage]
         setDbItem(newCurrentPostsInLocalStorage);
 
-        console.log('Success:', result);
         return { result, status: 'success' };
     } catch (error) {
-        console.error('Error:', error);
         return { status: 'error' };
     }
 }
@@ -72,10 +67,8 @@ export async function put(data, url = 'https://jsonplaceholder.typicode.com/post
         const updateCurrentPostsInLocalStorage = currentPostsInLocalStorage.map(post => (post[1] === data[1] ? data : post));
         setDbItem(updateCurrentPostsInLocalStorage);
 
-        console.log('Success:', result);
         return { result, status: 'success' };
     } catch (error) {
-        console.error('Error:', error);
         return { status: 'error' };
     }
 }
@@ -87,9 +80,8 @@ export async function deleteItem(data, url='https://jsonplaceholder.typicode.com
         });
         const result = await response.json();
         setDbItem(data);
-        console.log('Success:', result);
-        return result;
+        return { result, status: 'success' };
     } catch (error) {
-        console.error('Error:', error);
+        return { status: 'error' };
     }
 }
