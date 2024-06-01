@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 
-const usePosts = () => {
+const useGetPosts = () => {
     const [data, setData] = useState([]);
       
     useEffect(() => {
@@ -13,7 +13,10 @@ const usePosts = () => {
         // Convert array of objects into array of arrays
         const adaptedPosts = posts.map(Object.values);
 
-        setData(JSON.parse(localStorage.getItem('postsFromAPI')) ? JSON.parse(localStorage.getItem('postsFromAPI')) : adaptedPosts);
+        const currentPostsInLocalStorage = JSON.parse(localStorage.getItem('postsFromAPI'));
+        console.log({currentPostsInLocalStorage});
+
+        setData(currentPostsInLocalStorage && currentPostsInLocalStorage.length > 0 ? JSON.parse(localStorage.getItem('postsFromAPI')) : adaptedPosts);
       }
     
       fetchPost();
@@ -21,4 +24,4 @@ const usePosts = () => {
     return {data};
 }
 
-export default usePosts;
+export default useGetPosts;
