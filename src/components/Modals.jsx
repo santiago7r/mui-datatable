@@ -15,13 +15,16 @@ const style = {
     p: 4,
   };
 
-const Modals = ({ handleClose, open, addPost }) => {
-  const [newPost, setNewPost] = useState({
-    userId: null,
-    id: null,
-    title: '',
-    body: ''
-  });
+const Modals = ({ handleClose, open, action, currenEditingRow = [], labelOfButton = 'ADD POST' }) => {
+  const [userIdFromEditing = null, idFromEditing = null, titleFromEditing = '', bodyFromEditing = ''] = currenEditingRow;
+  const initialState = {
+    userId: userIdFromEditing,
+    id: idFromEditing,
+    title: titleFromEditing,
+    body: bodyFromEditing
+  }
+  console.log('initialState', initialState);
+  const [newPost, setNewPost] = useState(initialState);
 
     return (
         <div>
@@ -34,25 +37,29 @@ const Modals = ({ handleClose, open, addPost }) => {
           <Box sx={style}>
             <TextField
               id="outlined-basic"
+              value={newPost.userId}
               label="User ID" variant="outlined"
               onChange={(event) => setNewPost({...newPost, userId: event.target.value})}
             />
             <TextField
               id="outlined-basic"
+              value={newPost.id}
               label="ID" variant="outlined"
               onChange={(event) => setNewPost({...newPost, id: event.target.value})}
             />
             <TextField
               id="outlined-basic"
+              value={newPost.title}
               label="Title" variant="outlined"
               onChange={(event) => setNewPost({...newPost, title: event.target.value})}
             />
             <TextField
               id="outlined-basic"
+              value={newPost.body}
               label="Body" variant="outlined"
               onChange={(event) => setNewPost({...newPost, body: event.target.value})}
             />
-            <Button onClick={() => addPost(newPost)}>Add Post</Button>
+            <Button onClick={() => action(newPost)}>{labelOfButton}</Button>
           </Box>
         </Modal>
       </div>
@@ -62,7 +69,9 @@ const Modals = ({ handleClose, open, addPost }) => {
 Modals.propTypes = {
     handleClose: PropTypes.func.isRequired,
     open: PropTypes.bool.isRequired,
-    addPost: PropTypes.func.isRequired
+    action: PropTypes.func.isRequired,
+    currenEditingRow: PropTypes.object,
+    labelOfButton: PropTypes.string
 }
 
 export default Modals;

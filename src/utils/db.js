@@ -1,5 +1,5 @@
 export const getDbItem = (itemKey = 'postsFromAPI') => {
-    JSON.parse(localStorage.getItem(itemKey));
+    return JSON.parse(localStorage.getItem(itemKey));
 };
 
 export const setDbItem = (dbItem, key = 'postsFromAPI') => {
