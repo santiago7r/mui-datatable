@@ -136,7 +136,7 @@ function App() {
         showLabel={false}
       />
       } 
-      <Button onClick={handleOpen}>
+      <Button onClick={handleOpen} sx={{ margin: '30px' }} variant="contained" size="large">
         Add Post
       </Button>
 
