@@ -1,8 +1,23 @@
-# React + Vite
+**# MUI-datatable**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Table with mui-datable that use https://jsonplaceholder.typicode.com/ for fake data and local storage for simulate a server.
 
-Currently, two official plugins are available:
+Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Add Post
+
+View row data
+
+Delete row
+
+Edit row
+
+Installation steps for local setup
+
+Clone repository: https://github.com/santiago7r/mui-datatable.git
+
+Install the dependencies (npm i).
+
+Initialize with npm run dev.
+
+Public link: https://table-mui.vercel.app/
